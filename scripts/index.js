@@ -4,13 +4,15 @@ const placesList = document.querySelector('.places__list');
 function createCard(title, link, deleteCard){
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     
-    cardElement.querySelector('.card__image').src = link;
+    const cardImage = cardElement.querySelector('.card__image');
+    cardImage.src = link;
+    cardImage.alt = title;
     cardElement.querySelector('.card__title').textContent = title;
 
     const deleteButton = cardElement.querySelector('.card__delete-button');
     deleteButton.addEventListener('click', deleteCard);
-
-    placesList.append(cardElement);
+    
+    return cardElement;
 }
 
 function deleteCard(evt){
@@ -19,5 +21,5 @@ function deleteCard(evt){
 }
 
 initialCards.forEach((item) => {
-    createCard(item.name, item.link, deleteCard);
+    placesList.append(createCard(item.name, item.link, deleteCard));
 });
