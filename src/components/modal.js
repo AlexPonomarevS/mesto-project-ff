@@ -24,11 +24,7 @@ export function openModal(popup){
 
 export function closeModal(popup){
     popup.classList.remove('popup_is-opened');
-
-    setTimeout(() => {
-        popup.classList.remove('popup_is-animated');
-      }, 600);
     
-    document.addEventListener("keydown", closePopupESC);
-    document.addEventListener("mousedown", closePopupOverlay);
+    document.removeEventListener("keydown", closePopupESC);
+    document.removeEventListener("mousedown", closePopupOverlay);
 }

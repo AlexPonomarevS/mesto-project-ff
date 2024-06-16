@@ -1,4 +1,5 @@
 import '../pages/index.css';
+import { initialCards } from "../components/cards";
 import * as modal from '../components/modal.js';
 import * as card from '../components/card.js'
 
@@ -38,7 +39,7 @@ const popupInputCardLink = popupNewCardForm.elements.link;
 function handleCardFormSubmit(evt) {
     evt.preventDefault();
     
-    card.placesList.prepend(card.createCard(popupInputCardName.value, popupInputCardLink.value, card.deleteCard));
+    card.placesList.prepend(card.createCard(popupInputCardName.value, popupInputCardLink.value, card.deleteCard, card.likeCard));
 
     modal.closeModal(newCardPopup);
     popupNewCardForm.reset();
@@ -51,9 +52,10 @@ addCardButton.addEventListener('click', () => {
 });
 
 closePopupButtons.forEach(item => {
-    popups.forEach(pop => {
-        item.addEventListener('click', () => {
-            modal.closeModal(pop);
-        });
-    });
+    const popup = item.closest('.popup');
+    item.addEventListener('click', () => modal.closeModal(popup));
+});
+
+initialCards.forEach((item) => {
+    card.placesList.append(card.createCard(item.name, item.link, card.deleteCard, card.likeCard, card.handleImageClick));
 });
