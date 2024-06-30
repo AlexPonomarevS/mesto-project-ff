@@ -6,67 +6,45 @@ export const config = {
   },
 };
 
+const handleResponse = (res) => {
+  if (!res.ok) {
+    throw new Error(`Ошибка ${res.status}`);
+  }
+
+  return res.json();
+};
+
 export function getUserInfo() {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Ошибка ${res.status}`);
-    }
-
-    return res.json();
-  });
+  }).then(handleResponse);
 }
 
 export function getInitialCards() {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Ошибка ${res.status}`);
-    }
-
-    return res.json();
-  });
+  }).then(handleResponse);
 }
 
 export function addLike(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Ошибка ${res.status}`);
-    }
-
-    return res.json();
-  });
+  }).then(handleResponse);
 }
 
 export function deleteLike(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Ошибка ${res.status}`);
-    }
-
-    return res.json();
-  });
+  }).then(handleResponse);
 }
 
 export function deleteCard(cardId) {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Ошибка ${res.status}`);
-    }
-
-    return res.json();
-  });
+  }).then(handleResponse);
 }
 
 export function editAvatar(avatar) {
@@ -76,13 +54,7 @@ export function editAvatar(avatar) {
     body: JSON.stringify({
       avatar: avatar,
     }),
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Ошибка ${res.status}`);
-    }
-
-    return res.json();
-  });
+  }).then(handleResponse);
 }
 
 export function newCard({ name, link }) {
@@ -93,13 +65,7 @@ export function newCard({ name, link }) {
       name: name,
       link: link,
     }),
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Ошибка ${res.status}`);
-    }
-
-    return res.json();
-  });
+  }).then(handleResponse);
 }
 
 export function editProfileInfo({ name, about }) {
@@ -110,11 +76,5 @@ export function editProfileInfo({ name, about }) {
       name: name,
       about: about,
     }),
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Ошибка ${res.status}`);
-    }
-
-    return res.json();
-  });
+  }).then(handleResponse);
 }

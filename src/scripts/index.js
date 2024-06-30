@@ -15,6 +15,10 @@ const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileImg = document.querySelector(".profile__image");
 
+const cardPopup = document.querySelector(".popup_type_image");
+const cardPopupImg = document.querySelector(".popup__image");
+const cardPopupTitle = document.querySelector(".popup__caption");
+
 const popupAvatarForm = document.forms["edit-avatar"];
 const avatarInput = popupAvatarForm.elements.avatar;
 let userId;
@@ -39,9 +43,9 @@ function handleProfileFormSubmit(evt) {
       name: popupInputProfileName.value,
       about: popupInputProfileDescription.value,
     })
-    .then(() => {
-      profileTitle.textContent = popupInputProfileName.value;
-      profileDescription.textContent = popupInputProfileDescription.value;
+    .then((data) => {
+      profileTitle.textContent = data.name;
+      profileDescription.textContent = data.about;
       modal.closeModal(editPopup);
     })
     .catch((error) => {
@@ -82,7 +86,7 @@ function handleCardFormSubmit(evt) {
           newCard.link,
           card.deleteCard,
           card.likeCard,
-          card.handleImageClick,
+          handleImageClick,
           newCard.likes,
           userId,
           newCard._id,
@@ -141,7 +145,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
           cardElem.link,
           card.deleteCard,
           card.likeCard,
-          card.handleImageClick,
+          handleImageClick,
           cardElem.likes,
           userId,
           cardElem._id,
@@ -181,3 +185,11 @@ popupAvatarForm.addEventListener("submit", function (evt) {
       renderLoading(false, popupElement);
     });
 });
+
+function handleImageClick(evt) {
+  cardPopupImg.alt = evt.target.alt;
+  cardPopupImg.src = evt.target.src;
+  cardPopupTitle.textContent = evt.target.alt;
+
+  modal.openModal(cardPopup);
+}
